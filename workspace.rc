@@ -1,6 +1,10 @@
+export PATH=${PROJECTS_ROOT}/.venv/bin:${PATH}
 if [[ ! -d ${PROJECTS_ROOT}/.venv ]]
 then
    python -m venv --copies ${PROJECTS_ROOT}/.venv
+   pip install --upgrade pip
+   pip install ipydatagrid
+   pip install pandas
+   pip install jupyter
 fi
 
-export PATH=${PROJECTS_ROOT}/.venv/bin:${PATH}

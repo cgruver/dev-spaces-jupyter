@@ -1,0 +1,6 @@
+if [[ ! -d ${PROJECTS_ROOT}/.venv ]]
+then
+   python -m venv --copies ${PROJECTS_ROOT}/.venv
+fi
+
+export PATH=${PROJECTS_ROOT}/.venv/bin:${PATH}

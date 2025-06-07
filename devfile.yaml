@@ -35,6 +35,27 @@ components:
       value: "/projects/home"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/dev-spaces-jupyter/dev-spaces-jupyter.code-workspace"
+    endpoints:
+    - exposure: none
+      name: jupyter01
+      protocol: tcp
+      targetPort: 9000
+    - exposure: none
+      name: jupyter02
+      protocol: tcp
+      targetPort: 9001
+    - exposure: none
+      name: jupyter03
+      protocol: tcp
+      targetPort: 9002
+    - exposure: none
+      name: jupyter04
+      protocol: tcp
+      targetPort: 9003
+    - exposure: none
+      name: jupyter05
+      protocol: tcp
+      targetPort: 9004
 - volume:
     size: 20Gi
   name: projects

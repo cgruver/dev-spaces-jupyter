@@ -70,6 +70,9 @@ components:
         if [[ ! -d /projects/.venv ]] ; then python -m venv --copies /projects/.venv ; source /projects/.venv/bin/activate ; pip install --upgrade pip ; pip install ipydatagrid pandas jupyterlab ipykernel ; fi
     command:
       - /bin/bash
+    env:
+    - name: HOME
+      value: "/projects/home"
 - name: prep-oc-cli
   container:
     args:

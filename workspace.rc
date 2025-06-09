@@ -1,15 +1,5 @@
-if [[ ! -d ${PROJECTS_ROOT}/.venv ]]
+if [[ -z ${VIRTUAL_ENV} ]]
 then
-   python -m venv --copies ${PROJECTS_ROOT}/.venv
    source ${PROJECTS_ROOT}/.venv/bin/activate
-   pip install --upgrade pip
-   pip install ipydatagrid
-   pip install pandas
-   pip install jupyterlab
-   pip install ipykernel
-else
-   if [[ -z ${VIRTUAL_ENV} ]]
-   then
-     source ${PROJECTS_ROOT}/.venv/bin/activate
-   fi
 fi
+

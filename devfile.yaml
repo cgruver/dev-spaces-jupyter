@@ -63,6 +63,7 @@ components:
   container:
     image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
     sourceMapping: /projects
+    mountSources: true
     args:
       - '-c'
       - >-

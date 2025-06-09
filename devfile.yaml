@@ -59,7 +59,17 @@ components:
 - volume:
     size: 20Gi
   name: projects
-- name: prep-workspace
+- name: prep-python-venv
+  container:
+    image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
+    sourceMapping: /projects
+    args:
+      - '-c'
+      - >-
+        if [[ ! -d ${PROJECTS_ROOT}/.venv ]]; then python -m venv --copies ${PROJECTS_ROOT}/.venv ; source ${PROJECTS_ROOT}/.venv/bin/activate ; pip install --upgrade pip ; pip install ipydatagrid pandas jupyterlab ipykernel; fi
+    command:
+      - /bin/bash
+- name: prep-oc-cli
   container:
     args:
       - '-c'
@@ -79,9 +89,14 @@ components:
       value: "/projects/home"
 commands:
 - apply:
-    component: prep-workspace
+    component: prep-oc-cli
     label: Pre Start Prep
-  id: prep-workspace
+  id: prep-oc-cli
+- apply:
+    component: prep-python-venv
+    label: Pre Start Prep
+  id: prep-python-venv
 events:
   preStart:
-    - prep-workspace
+    - prep-oc-cli
+    - prep-python-venv

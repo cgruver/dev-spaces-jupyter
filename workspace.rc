@@ -8,5 +8,8 @@ then
    pip install jupyterlab
    pip install ipykernel
 else
-   source ${PROJECTS_ROOT}/.venv/bin/activate
+   if [[ -z ${VIRTUAL_ENV} ]]
+   then
+     source ${PROJECTS_ROOT}/.venv/bin/activate
+   fi
 fi

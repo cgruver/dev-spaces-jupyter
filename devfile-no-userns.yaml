@@ -50,7 +50,7 @@ components:
   name: projects
 - name: prep-python-venv
   container:
-    image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
+    image: quay.io/cgruver0/che/workspace-base:no-userns
     sourceMapping: /projects
     memoryRequest: 128Mi
     memoryLimit: 1Gi

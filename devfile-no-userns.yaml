@@ -1,0 +1,99 @@
+schemaVersion: 2.2.0
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+metadata:
+  name: dev-spaces-jupyter
+projects:
+  - name: dev-spaces-jupyter
+    git:
+      remotes:
+        origin: https://github.com/cgruver/dev-spaces-jupyter.git
+      checkoutFrom:
+        remote: origin
+        revision: main
+components:
+- name: dev-tools
+  container:
+    image: quay.io/cgruver0/che/workspace-base:no-userns
+    memoryLimit: 6Gi
+    mountSources: true
+    env:
+    - name: SHELL
+      value: "/bin/zsh"
+    - name: HOME
+      value: "/projects/home"
+    - name: VSCODE_DEFAULT_WORKSPACE
+      value: "/projects/dev-spaces-jupyter/dev-spaces-jupyter.code-workspace"
+    endpoints:
+    - exposure: none
+      name: jupyter01
+      protocol: tcp
+      targetPort: 9000
+    - exposure: none
+      name: jupyter02
+      protocol: tcp
+      targetPort: 9001
+    - exposure: none
+      name: jupyter03
+      protocol: tcp
+      targetPort: 9002
+    - exposure: none
+      name: jupyter04
+      protocol: tcp
+      targetPort: 9003
+    - exposure: none
+      name: jupyter05
+      protocol: tcp
+      targetPort: 9004
+- volume:
+    size: 20Gi
+  name: projects
+- name: prep-python-venv
+  container:
+    image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
+    sourceMapping: /projects
+    memoryRequest: 128Mi
+    memoryLimit: 1Gi
+    cpuRequest: 10m
+    cpuLimit: 200m
+    mountSources: true
+    args:
+      - '-c'
+      - >-
+        if [[ ! -d /projects/.venv ]] ; then python -m venv --copies /projects/.venv ; source /projects/.venv/bin/activate ; pip install --upgrade pip ; pip install ipydatagrid pandas jupyterlab ipykernel ; fi
+    command:
+      - /bin/bash
+    env:
+    - name: HOME
+      value: "/projects/home"
+- name: prep-oc-cli
+  container:
+    args:
+      - '-c'
+      - >-
+        mkdir -p /projects/bin && cp /usr/bin/oc /projects/bin/oc && cp /usr/bin/kubectl /projects/bin/kubectl && if [[ -f ${HOME}/.kube/config ]]; then rm ${HOME}/.kube/config; fi
+    command:
+      - /bin/bash
+    image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+    mountSources: true
+    sourceMapping: /projects
+    memoryRequest: 128Mi
+    memoryLimit: 256Mi
+    cpuRequest: 10m
+    cpuLimit: 200m
+    env:
+    - name: HOME
+      value: "/projects/home"
+commands:
+- apply:
+    component: prep-oc-cli
+    label: Pre Start Prep
+  id: prep-oc-cli
+- apply:
+    component: prep-python-venv
+    label: Pre Start Prep
+  id: prep-python-venv
+events:
+  preStart:
+    - prep-oc-cli
+    - prep-python-venv

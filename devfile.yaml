@@ -63,6 +63,10 @@ components:
   container:
     image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
     sourceMapping: /projects
+    memoryRequest: 128Mi
+    memoryLimit: 1Gi
+    cpuRequest: 10m
+    cpuLimit: 200m
     mountSources: true
     args:
       - '-c'

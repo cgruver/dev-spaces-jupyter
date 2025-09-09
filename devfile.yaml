@@ -71,8 +71,6 @@ components:
     args:
       - '-c'
       - '${PROJECT_SOURCE}/init-python-env.sh'
-      # - >-
-      #   if [[ ! -d /projects/.venv ]] ; then python -m venv --copies --prompt jupyter /projects/.venv ; source /projects/.venv/bin/activate ; pip install --upgrade pip ; pip install ipydatagrid pandas jupyterlab ipykernel ; fi
     command:
       - /bin/bash
     env:

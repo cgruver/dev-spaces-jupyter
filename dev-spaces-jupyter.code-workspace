@@ -16,7 +16,10 @@
 			"cnshenj.vscode-task-manager",
 			"ms-python.python",
 			"ms-python.debugpy",
-			"ms-toolsai.jupyter"
+			"ms-toolsai.jupyter",
+			"reditorsupport.r",
+			"rdebugger.r-debugger",
+			"reditorsupport.r-syntax"
 		]
 	},
 	"settings": {

@@ -28,7 +28,7 @@ components:
     - name: HOME
       value: "/projects/home"
     - name: PATH
-      value: "/opt/micromamba/bin:${PATH}"
+      value: "/opt/micromamba/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/dev-spaces-jupyter/dev-spaces-jupyter.code-workspace"
     endpoints:

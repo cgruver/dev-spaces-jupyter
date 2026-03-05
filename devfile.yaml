@@ -19,8 +19,7 @@ components:
         annotations:
           io.kubernetes.cri-o.Devices: "/dev/fuse,/dev/net/tun"
   container:
-    # image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
-    image: quay.io/cgruver0/che/workspace-base:latest
+    image: quay.io/maschind/workspace-base:latest
     memoryLimit: 6Gi
     mountSources: true
     env:
@@ -56,7 +55,7 @@ components:
   name: projects
 - name: prep-python-venv
   container:
-    image: quay.io/cgruver0/che/workspace-base:latest
+    image: quay.io/maschind/workspace-base:latest
     sourceMapping: /projects
     memoryRequest: 128Mi
     memoryLimit: 1Gi

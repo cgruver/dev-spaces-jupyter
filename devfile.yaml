@@ -18,9 +18,6 @@ components:
       metadata:
         annotations:
           io.kubernetes.cri-o.Devices: "/dev/fuse,/dev/net/tun"
-    container-overrides: 
-      securityContext:
-        procMount: Unmasked
   container:
     # image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
     image: quay.io/cgruver0/che/workspace-base:latest

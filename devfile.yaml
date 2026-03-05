@@ -7,7 +7,7 @@ projects:
   - name: dev-spaces-jupyter
     git:
       remotes:
-        origin: https://github.com/cgruver/dev-spaces-jupyter.git
+        origin: https://github.com/maschind/dev-spaces-jupyter.git
       checkoutFrom:
         remote: origin
         revision: main

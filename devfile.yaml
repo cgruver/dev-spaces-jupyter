@@ -18,8 +18,6 @@ components:
       metadata:
         annotations:
           io.kubernetes.cri-o.Devices: "/dev/fuse,/dev/net/tun"
-      spec:
-        hostUsers: false
     container-overrides: 
       securityContext:
         procMount: Unmasked

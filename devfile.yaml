@@ -27,6 +27,8 @@ components:
       value: "/bin/zsh"
     - name: HOME
       value: "/projects/home"
+    - name: PATH
+      value: "/opt/micromamba/bin:${PATH}"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/dev-spaces-jupyter/dev-spaces-jupyter.code-workspace"
     endpoints:
@@ -70,6 +72,23 @@ components:
     env:
     - name: HOME
       value: "/projects/home"
+- name: prep-r-kernel
+  container:
+    image: quay.io/maschind/workspace-base:latest
+    sourceMapping: /projects
+    memoryRequest: 128Mi
+    memoryLimit: 1Gi
+    cpuRequest: 10m
+    cpuLimit: 200m
+    mountSources: true
+    args:
+      - '-c'
+      - '${PROJECT_SOURCE}/init-r-env.sh'
+    command:
+      - /bin/bash
+    env:
+    - name: HOME
+      value: "/projects/home"
 - name: prep-oc-cli
   container:
     args:
@@ -97,7 +116,24 @@ commands:
     component: prep-python-venv
     label: Pre Start Prep
   id: prep-python-venv
+- apply:
+    component: prep-r-kernel
+    label: Pre Start Prep
+  id: prep-r-kernel
+- exec:
+    component: dev-tools
+    commandLine: Rscript ${PROJECT_SOURCE}/hello.R
+    workingDir: ${PROJECT_SOURCE}
+    label: Run R Hello World
+  id: run-r-hello
+- exec:
+    component: dev-tools
+    commandLine: R --no-save
+    workingDir: ${PROJECT_SOURCE}
+    label: R Interactive Console
+  id: r-console
 events:
   preStart:
     - prep-oc-cli
     - prep-python-venv
+    - prep-r-kernel

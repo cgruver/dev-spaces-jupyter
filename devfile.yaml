@@ -7,7 +7,7 @@ projects:
   - name: dev-spaces-jupyter
     git:
       remotes:
-        origin: https://github.com/cgruver/dev-spaces-jupyter.git
+        origin: https://github.com/maschind/dev-spaces-jupyter.git
       checkoutFrom:
         remote: origin
         revision: main
@@ -18,14 +18,8 @@ components:
       metadata:
         annotations:
           io.kubernetes.cri-o.Devices: "/dev/fuse,/dev/net/tun"
-      spec:
-        hostUsers: false
-    container-overrides: 
-      securityContext:
-        procMount: Unmasked
   container:
-    # image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
-    image: quay.io/cgruver0/che/workspace-base:latest
+    image: quay.io/maschind/workspace-base:latest
     memoryLimit: 6Gi
     mountSources: true
     env:
@@ -33,6 +27,8 @@ components:
       value: "/bin/zsh"
     - name: HOME
       value: "/projects/home"
+    - name: PATH
+      value: "/opt/micromamba/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/dev-spaces-jupyter/dev-spaces-jupyter.code-workspace"
     endpoints:
@@ -61,7 +57,7 @@ components:
   name: projects
 - name: prep-python-venv
   container:
-    image: quay.io/cgruver0/che/workspace-base:latest
+    image: quay.io/maschind/workspace-base:latest
     sourceMapping: /projects
     memoryRequest: 128Mi
     memoryLimit: 1Gi
@@ -71,6 +67,23 @@ components:
     args:
       - '-c'
       - '${PROJECT_SOURCE}/init-python-env.sh'
+    command:
+      - /bin/bash
+    env:
+    - name: HOME
+      value: "/projects/home"
+- name: prep-r-kernel
+  container:
+    image: quay.io/maschind/workspace-base:latest
+    sourceMapping: /projects
+    memoryRequest: 128Mi
+    memoryLimit: 1Gi
+    cpuRequest: 10m
+    cpuLimit: 200m
+    mountSources: true
+    args:
+      - '-c'
+      - '${PROJECT_SOURCE}/init-r-env.sh'
     command:
       - /bin/bash
     env:
@@ -103,7 +116,24 @@ commands:
     component: prep-python-venv
     label: Pre Start Prep
   id: prep-python-venv
+- apply:
+    component: prep-r-kernel
+    label: Pre Start Prep
+  id: prep-r-kernel
+- exec:
+    component: dev-tools
+    commandLine: Rscript ${PROJECT_SOURCE}/hello.R
+    workingDir: ${PROJECT_SOURCE}
+    label: Run R Hello World
+  id: run-r-hello
+- exec:
+    component: dev-tools
+    commandLine: R --no-save
+    workingDir: ${PROJECT_SOURCE}
+    label: R Interactive Console
+  id: r-console
 events:
   preStart:
     - prep-oc-cli
     - prep-python-venv
+    - prep-r-kernel

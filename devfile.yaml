@@ -45,15 +45,15 @@ components:
       protocol: tcp
       targetPort: 9004
     - exposure: none
-      name: jupyter05
+      name: jupyter06
       protocol: tcp
       targetPort: 9005
     - exposure: none
-      name: jupyter05
+      name: jupyter07
       protocol: tcp
       targetPort: 9006
     - exposure: none
-      name: jupyter05
+      name: jupyter08
       protocol: tcp
       targetPort: 9007
 - volume:

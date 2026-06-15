@@ -44,6 +44,18 @@ components:
       name: jupyter05
       protocol: tcp
       targetPort: 9004
+    - exposure: none
+      name: jupyter05
+      protocol: tcp
+      targetPort: 9005
+    - exposure: none
+      name: jupyter05
+      protocol: tcp
+      targetPort: 9006
+    - exposure: none
+      name: jupyter05
+      protocol: tcp
+      targetPort: 9007
 - volume:
     size: 20Gi
   name: projects

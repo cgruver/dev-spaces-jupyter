@@ -16,17 +16,13 @@
 			"cnshenj.vscode-task-manager",
 			"ms-python.python",
 			"ms-python.debugpy",
-			"ms-toolsai.jupyter",
-			"reditorsupport.r",
-			"rdebugger.r-debugger",
-			"reditorsupport.r-syntax"
+			"ms-toolsai.jupyter"
 		]
 	},
 	"settings": {
 		"workbench.colorTheme": "Winter is Coming (Light)",
 		"workbench.preferredDarkColorTheme": "Winter is Coming (Dark Blue)",
 		"workbench.preferredLightColorTheme": "Winter is Coming (Light)",
-		"python.useEnvironmentsExtension": true,
 		"editor.wordWrap": "on",
 		"files.autoSave": "off"
 	}

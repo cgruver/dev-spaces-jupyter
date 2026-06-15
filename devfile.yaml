@@ -15,14 +15,12 @@ components:
 - name: dev-tools
   container:
     # image: nexus.clg.lab:5002/dev-spaces/workspace-base:latest
-    image: quay.io/cgruver0/che/workspace-base:latest
+    image: quay.io/cgruver0/che/workspace-base:ubi10
     memoryLimit: 6Gi
     mountSources: true
     env:
     - name: SHELL
       value: "/bin/zsh"
-    - name: HOME
-      value: "/projects/home"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/dev-spaces-jupyter/dev-spaces-jupyter.code-workspace"
     endpoints:
@@ -51,7 +49,7 @@ components:
   name: projects
 - name: prep-python-venv
   container:
-    image: quay.io/cgruver0/che/workspace-base:latest
+    image: quay.io/cgruver0/che/workspace-base:ubi10
     sourceMapping: /projects
     memoryRequest: 128Mi
     memoryLimit: 1Gi

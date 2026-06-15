@@ -73,9 +73,6 @@ components:
       - '${PROJECT_SOURCE}/init-python-env.sh'
     command:
       - /bin/bash
-    env:
-    - name: HOME
-      value: "/projects/home"
 - name: prep-oc-cli
   container:
     args:

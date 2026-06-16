@@ -56,6 +56,14 @@ components:
       name: jupyter08
       protocol: tcp
       targetPort: 9007
+    - exposure: none
+      name: jupyter09
+      protocol: tcp
+      targetPort: 9008
+    - exposure: none
+      name: jupyter10
+      protocol: tcp
+      targetPort: 9009
 - volume:
     size: 20Gi
   name: projects
